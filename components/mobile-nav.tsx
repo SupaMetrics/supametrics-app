@@ -5,6 +5,7 @@ import Link from "next/link";
 import LinkButton from "./link-button";
 import { ModeToggle } from "./mode-toggle";
 import { Icons } from "./icons";
+import Logo from "./logo";
 
 const navItems = [
   { label: "Docs", href: "/docs" },
@@ -30,12 +31,31 @@ export const MobileNav = () => {
       {open && (
         <div className="fixed inset-0 z-40 bg-white dark:bg-black p-6">
           <div className="flex justify-between items-center mb-6">
-            <span className="text-lg font-semibold">Menu</span>
+            <Logo />
             <button onClick={() => setOpen(false)} aria-label="Close menu">
-              <Icons color="#6b7280" className="rounded-full p-1 border border-neutral-200 dark:border-neutral-800" type="times" width="29px" height="29px" />
+              <Icons
+                color="#6b7280"
+                className="rounded-full p-1 border border-neutral-200 dark:border-neutral-800"
+                type="times"
+                width="29px"
+                height="29px"
+              />
             </button>
           </div>
 
+          <div className="mt-4 flex flex-col gap-3 text-center">
+            <LinkButton className="text-base font-medium" href="/login">
+              Login
+            </LinkButton>
+            <LinkButton
+              className="text-base font-medium"
+              variant="outline"
+              href="/signup"
+            >
+              Get Started
+            </LinkButton>
+            <ModeToggle />
+          </div>
           <nav className="flex flex-col gap-4 text-neutral-800 dark:text-neutral-200">
             {navItems.map((item, idx) => (
               <Link key={idx} href={item.href} onClick={() => setOpen(false)}>
@@ -43,11 +63,7 @@ export const MobileNav = () => {
               </Link>
             ))}
 
-            <div className="mt-4 flex flex-col gap-3 text-center">
-              <LinkButton href="/login">Login</LinkButton>
-              <LinkButton variant="outline" href="/register">
-                Signup
-              </LinkButton>
+            <div className="mt-4 flex flex-col gap-3 text-center border-t border-neutral-200 dark:border-neutral-900 pt-4">
               <ModeToggle />
             </div>
           </nav>
