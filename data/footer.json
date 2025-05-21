@@ -9,7 +9,7 @@
   ],
   "Company": [
     { "name": "Contact Us", "url": "/contact" },
-    { "name": "Privacy Policy", "url": "/privacy-policy" },
+    { "name": "Privacy Policy", "url": "/privacy" },
     { "name": "Terms of Use", "url": "/terms" },
     { "name": "Pricing", "url": "/pricing" }
   ],

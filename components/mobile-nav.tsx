@@ -32,7 +32,7 @@ export const MobileNav = () => {
           <div className="flex justify-between items-center mb-6">
             <span className="text-lg font-semibold">Menu</span>
             <button onClick={() => setOpen(false)} aria-label="Close menu">
-              <Icons type="close" width="24px" height="24px" />
+              <Icons color="#6b7280" className="rounded-full p-1 border border-neutral-200 dark:border-neutral-800" type="times" width="29px" height="29px" />
             </button>
           </div>
 
@@ -43,7 +43,7 @@ export const MobileNav = () => {
               </Link>
             ))}
 
-            <div className="mt-4 flex flex-col gap-3">
+            <div className="mt-4 flex flex-col gap-3 text-center">
               <LinkButton href="/login">Login</LinkButton>
               <LinkButton variant="outline" href="/register">
                 Signup
