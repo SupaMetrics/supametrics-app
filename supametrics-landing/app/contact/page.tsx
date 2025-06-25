@@ -20,7 +20,7 @@ const Page = () => {
       title: "Follow us on YouTube",
       description:
         "For tutorials on how to integrate Supametrics and learn more about us.",
-      linkText: "Follow @analytix.dev",
+      linkText: "Follow @supametrics",
       linkHref: "https://youtube.com/supametrics",
     },
     {

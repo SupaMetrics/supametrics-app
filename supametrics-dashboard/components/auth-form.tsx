@@ -118,12 +118,14 @@ export function AuthForm({
               )}
 
               {mode === "login" && (
-                <Link
-                  href="/forgot-password"
-                  className="text-main text-right text-sm"
-                >
-                  Forgotten Password?
-                </Link>
+                <div>
+                  <Link
+                    href="/forgot-password"
+                    className="text-main text-right text-sm"
+                  >
+                    Forgotten Password?
+                  </Link>
+                </div>
               )}
 
               <Button type="submit" className="w-full">

@@ -95,18 +95,23 @@ export const Form: React.FC<FormProps> = ({
       )}
       {...props}
     >
-      <Card className="w-full max-w-lg md:max-w-2xl shadow-md border md:rounded-xl p-2 md:px-5 md:py-8">
+      <Card className="w-full max-w-lg md:max-w-2xl shadow-md border md:rounded-xl py-6 md:px-5 md:py-8">
         <CardHeader>
-          <CardTitle className="text-lg md:text-2xl">
+          <CardTitle className="text-xl md:text-2xl">
             {titleMap[type]}
           </CardTitle>
-          <CardDescription>{descriptionMap[type]}</CardDescription>
+          <CardDescription className="text-base">
+            {descriptionMap[type]}
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             {type === "team" && (
               <div className="space-y-1">
-                <Label className="mb-2" htmlFor="name">
+                <Label
+                  className="mb-2 mt-3.5 text-base font-mediu"
+                  htmlFor="name"
+                >
                   Team Name
                 </Label>
                 <Input
@@ -122,7 +127,7 @@ export const Form: React.FC<FormProps> = ({
             {type === "project" && (
               <>
                 <div className="space-y-1">
-                  <Label className="mb-2">Team</Label>
+                  <Label className="mb-2 mt-3.5">Team</Label>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button
@@ -150,7 +155,7 @@ export const Form: React.FC<FormProps> = ({
                 </div>
 
                 <div className="space-y-1">
-                  <Label className="mb-2" htmlFor="name">
+                  <Label className="mb-2 mt-3.5" htmlFor="name">
                     Project Name
                   </Label>
                   <Input
@@ -163,7 +168,7 @@ export const Form: React.FC<FormProps> = ({
                 </div>
 
                 <div className="space-y-1">
-                  <Label className="mb-2" htmlFor="url">
+                  <Label className="mb-2 mt-3.5" htmlFor="url">
                     Project URL
                   </Label>
                   <Input
@@ -176,7 +181,7 @@ export const Form: React.FC<FormProps> = ({
                 </div>
 
                 <div className="space-y-1">
-                  <Label className="mb-2">Type</Label>
+                  <Label className="mb-2 mt-3.5">Type</Label>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button
@@ -207,7 +212,7 @@ export const Form: React.FC<FormProps> = ({
 
             {type === "link" && (
               <div className="space-y-1">
-                <Label className="mb-2" htmlFor="url">
+                <Label className="mb-2 mt-3.5" htmlFor="url">
                   Link
                 </Label>
                 <Input

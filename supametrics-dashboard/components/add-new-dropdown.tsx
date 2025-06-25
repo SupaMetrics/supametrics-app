@@ -23,9 +23,6 @@ export default function AddNewDropdown() {
           <Link href="/new"> Project</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href="/short-links/new">Short Link</Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
           <Link href="/teams/new">Team</Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
