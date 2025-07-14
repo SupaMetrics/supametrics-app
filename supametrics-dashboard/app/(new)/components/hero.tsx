@@ -10,7 +10,7 @@ interface HeroProps {
 
 export const Hero = ({ title, subtitle }: HeroProps) => {
   return (
-    <section className="w-full py-4 lg:py-6 border-b border-neutral-200 dark:border-neutral-900">
+    <section className="w-full py-6 border-b border-neutral-200 dark:border-neutral-900">
       <div className="mx-auto max-w-6xl px-6 flex flex-col-reverse lg:flex-row items-center justify-between gap-12">
         {/* Text Content */}
         <div className="max-w-2xl text-center lg:text-left">

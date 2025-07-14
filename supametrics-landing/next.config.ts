@@ -24,6 +24,9 @@ const nextConfig: NextConfig = {
       "verify-otp",
       "dashboard",
       "new",
+      "new/:path+",
+      "/project",
+      "/project/:path+",
       "settings",
       "ai",
     ];

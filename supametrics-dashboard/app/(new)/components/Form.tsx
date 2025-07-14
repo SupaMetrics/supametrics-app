@@ -4,11 +4,12 @@ import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Card,
   CardHeader,
@@ -18,7 +19,6 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { ChevronDown } from "lucide-react";
 
 interface FormProps {
   type: "team" | "project" | "link";
@@ -44,15 +44,11 @@ export const Form: React.FC<FormProps> = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     let result;
     switch (type) {
       case "team":
@@ -70,7 +66,6 @@ export const Form: React.FC<FormProps> = ({
         result = { linkUrl: formData.url };
         break;
     }
-
     onSubmit?.(result);
     console.log("Submitted:", result);
   };
@@ -87,6 +82,64 @@ export const Form: React.FC<FormProps> = ({
     link: "Paste a link you'd like to add.",
   };
 
+  const renderInput = (
+    name: keyof typeof formData,
+    label: string,
+    placeholder: string
+  ) => (
+    <div className="space-y-1">
+      <Label htmlFor={name} className="mb-2 mt-3.5 text-base md:text-lg">
+        {label}
+      </Label>
+      <Input
+        id={name}
+        name={name}
+        placeholder={placeholder}
+        value={formData[name]}
+        onChange={handleChange}
+        className="h-12 text-base"
+      />
+    </div>
+  );
+
+  const renderSelect = (
+    name: "team" | "projectType",
+    label: string,
+    options: string[]
+  ) => (
+    <div className="space-y-1">
+      <Label className="mb-2 mt-3.5 text-base md:text-lg">{label}</Label>
+      <Select
+        value={formData[name]}
+        onValueChange={(value) =>
+          setFormData((prev) => ({ ...prev, [name]: value }))
+        }
+      >
+        <SelectTrigger className="h-12 text-base">
+          <SelectValue placeholder={`Select ${label}`} />
+        </SelectTrigger>
+        <SelectContent>
+          {options.map((option) => (
+            <SelectItem key={option} value={option}>
+              {option}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
+  );
+
+  const fieldConfig: Record<string, React.ReactNode[]> = {
+    team: [renderInput("name", "Team Name", "e.g. Marketing Squad")],
+    project: [
+      renderSelect("team", "Team", mockTeams),
+      renderInput("name", "Project Name", "e.g. StarGPT"),
+      renderInput("url", "Project URL", "https://project-site.com"),
+      renderSelect("projectType", "Type", ["Web"]),
+    ],
+    link: [renderInput("url", "Link", "https://your-link.com")],
+  };
+
   return (
     <div
       className={cn(
@@ -97,135 +150,17 @@ export const Form: React.FC<FormProps> = ({
     >
       <Card className="w-full max-w-lg md:max-w-2xl shadow-md border md:rounded-xl py-6 md:px-5 md:py-8">
         <CardHeader>
-          <CardTitle className="text-xl md:text-2xl">
+          <CardTitle className="text-2xl md:text-3xl">
             {titleMap[type]}
           </CardTitle>
-          <CardDescription className="text-base">
+          <CardDescription className="text-base md:text-lg">
             {descriptionMap[type]}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
-            {type === "team" && (
-              <div className="space-y-1">
-                <Label
-                  className="mb-2 mt-3.5 text-base font-mediu"
-                  htmlFor="name"
-                >
-                  Team Name
-                </Label>
-                <Input
-                  id="name"
-                  name="name"
-                  placeholder="e.g. Marketing Squad"
-                  value={formData.name}
-                  onChange={handleChange}
-                />
-              </div>
-            )}
-
-            {type === "project" && (
-              <>
-                <div className="space-y-1">
-                  <Label className="mb-2 mt-3.5">Team</Label>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className="w-full justify-between"
-                      >
-                        {formData.team || "Select Team"}
-                        <ChevronDown className="ml-2 h-4 w-4 opacity-50" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-full">
-                      {mockTeams.map((team) => (
-                        <DropdownMenuItem
-                          key={team}
-                          onSelect={() =>
-                            setFormData((prev) => ({ ...prev, team }))
-                          }
-                          className="w-full cursor-pointer"
-                        >
-                          {team}
-                        </DropdownMenuItem>
-                      ))}
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>
-
-                <div className="space-y-1">
-                  <Label className="mb-2 mt-3.5" htmlFor="name">
-                    Project Name
-                  </Label>
-                  <Input
-                    id="name"
-                    name="name"
-                    placeholder="e.g. StarGPT"
-                    value={formData.name}
-                    onChange={handleChange}
-                  />
-                </div>
-
-                <div className="space-y-1">
-                  <Label className="mb-2 mt-3.5" htmlFor="url">
-                    Project URL
-                  </Label>
-                  <Input
-                    id="url"
-                    name="url"
-                    placeholder="https://project-site.com"
-                    value={formData.url}
-                    onChange={handleChange}
-                  />
-                </div>
-
-                <div className="space-y-1">
-                  <Label className="mb-2 mt-3.5">Type</Label>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className="w-full justify-between"
-                      >
-                        {formData.projectType}
-                        <ChevronDown className="ml-2 h-4 w-4 opacity-50" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-full">
-                      <DropdownMenuItem
-                        onSelect={() =>
-                          setFormData((prev) => ({
-                            ...prev,
-                            projectType: "Web",
-                          }))
-                        }
-                        className="w-full cursor-pointer"
-                      >
-                        Web
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>
-              </>
-            )}
-
-            {type === "link" && (
-              <div className="space-y-1">
-                <Label className="mb-2 mt-3.5" htmlFor="url">
-                  Link
-                </Label>
-                <Input
-                  id="url"
-                  name="url"
-                  placeholder="https://your-link.com"
-                  value={formData.url}
-                  onChange={handleChange}
-                />
-              </div>
-            )}
-
-            <Button type="submit" className="w-full mt-5">
+            {fieldConfig[type]}
+            <Button type="submit" className="w-full mt-6 h-12 text-base">
               {type === "project" ? "Complete" : `Submit ${type}`}
             </Button>
           </form>
